@@ -1,0 +1,1 @@
+{"version":3,"file":"boundle.js","sources":["../src/index.ts"],"sourcesContent":["let aa: string = \"123\";\r\ndebugger;\r\nconsole.log(aa, \"123\");\r\n"],"names":[],"mappings":";;;CAAA,IAAI,EAAE,GAAW,KAAK;CACtB;CACA,OAAO,CAAC,GAAG,CAAC,EAAE,EAAE,KAAK,CAAC;;;;;;"}
