@@ -106,7 +106,23 @@ MVVM：model数据层 + view视图层 + viewModel数据/视图监听层
  */
 ```
 
+**MVC**
 
+![image-20241217112705464](C:\Users\100489\AppData\Roaming\Typora\typora-user-images\image-20241217112705464.png)
+
+1.View传送指令到Controller
+
+2.Controller完成业务逻辑后改变Model状态
+
+3.Model将新的数据发送至View,用户得到反馈
+
+**MVVM**
+
+![image-20241217112958739](C:\Users\100489\AppData\Roaming\Typora\typora-user-images\image-20241217112958739.png)
+
+MVVM是把MVC中的Controller改变成了ViewModel，View的变化会自动更新到ViewModel,ViewModel的变化也会自动同步到View上显示,通过数据来显示视图层。
+
+![image-20241217113523281](C:\Users\100489\AppData\Roaming\Typora\typora-user-images\image-20241217113523281.png)
 
 ## JSX 构建视图的基础知识
 
@@ -531,6 +547,26 @@ ref={REF对象(this.xxx)}
 - 如果属性值是一个函数，则会把函数执行，把当前DOM元素传递给这个函数「x->DOM元素」,而在函数执行的内部，我们一般都会把DOM元素直接挂在到实例的某个属性上.
 - 如果属性值是一个REF对象，则会把DOM元素赋值给对象的current属性
 
+```tsx
+class Demo extends React.Component {
+    box3 = React.createRef(); //this.box3=xxx
+
+    render() {
+        return <div>
+            <h2 className="title" ref="titleBox">温馨提示</h2>
+            <h2 className="title" ref={x => this.box2 = x}>友情提示</h2>
+            <h2 className="title" ref={this.box3}>郑重提示</h2>
+        </div>;
+    }
+    componentDidMount() {
+        // 第一次渲染完毕「virtualDOM已经变为真实DOM」：此时我们可以获取需要操作的DOM元素
+        console.log(this.refs.titleBox);
+        console.log(this.box2);
+        console.log(this.box3.current);
+    }
+}
+```
+
 ### 不同组件添加Ref
 
  给元素标签设置ref，目的：获取对应的DOM元素 
@@ -650,7 +686,7 @@ useLayoutEffect会阻塞浏览器渲染真实DOM，优先执行Effect链表中�
 useLayoutEffect设置的callback要优先于useEffect去执行！！
 在两者设置的callback中，依然可以获取DOM元素「原因：真实DOM对象已经创建了，区别只是浏览器是否渲染」
 如果在callback函数中又修改了状态值「视图又要更新」
-useEffect:浏览器肯定是把第一次的真实已经绘制了，再去渲染第二次真实DOM
+useEffect:浏览器肯定是把第一次的真实DOM绘制了，再去渲染第二次真实DOM
 useLayoutEffect:浏览器是把两次真实DOM的渲染，合并在一起渲染的
 
 视图更新的步骤：
